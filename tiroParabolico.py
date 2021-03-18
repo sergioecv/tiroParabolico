@@ -17,8 +17,8 @@ def tap(x, y):
     if not inside(ball):
         ball.x = -199
         ball.y = -199
-        speed.x = (x + 200) / 25
-        speed.y = (y + 200) / 25
+        speed.x = (x + 350) / 25 # se modifico la velocidad del proyectil
+        speed.y = (y + 350) / 25 
 
 #Revisa si está dentro de los límites de la pantalla y regresa true si está dentro
 def inside(xy):
@@ -39,35 +39,39 @@ def draw():
         dot(6, 'red')
     update()
 
+# Funcion que permite que los balones se esten moviendo de forma aleatoria    
 def move():
-    "Move ball and targets."
     if randrange(40) == 0:
         y = randrange(-150, 150)
         target = vector(200, y)
         targets.append(target)
 
+ #velocidad de "targets"       
     for target in targets:
-        target.x -= 0.5
+        target.x -= 3 #se modifico la velocidad de los balones para que vayan mas rapido
 
+ #revisa si la pelota esta dentro de la pantalla       
     if inside(ball):
         speed.y -= 0.35
         ball.move(speed)
-
+    
     dupe = targets.copy()
     targets.clear()
-
+    
+#Cuando el proyectil le da al balon, este se elimina de la pantalla
     for target in dupe:
         if abs(target - ball) > 13:
             targets.append(target)
 
     draw()
 
-    #Revisa que cada objetivo este dentro de la pantalla
+ #Revisa que cada objetivo este dentro de la pantalla
     for target in targets:
         #Si el objetivo se sale de la pantalla lo reasigna del otro lado de la pantalla
         if not inside(target):
             target.x = 199
 
+ #despliega los proyectiles y balones en la pantalla           
     ontimer(move, 50)
 
 setup(420, 420, 370, 0)
